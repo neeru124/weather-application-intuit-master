@@ -1,0 +1,60 @@
+<div class="container">
+  <section class="forecast-section">
+    <h2 style="text-align: center">{{ title }}</h2>
+    <div class="form-container">
+      <form [formGroup]="weatherForm" class="form">
+        <div>
+          <label class="mr-10">City</label>
+          <input type="text" placeholder="City" formControlName="city" />
+        </div>
+        <div>
+          <label class="mr-10">Postal code</label>
+          <input
+            type="text"
+            placeholder="Postal code"
+            formControlName="zipcode"
+          />
+        </div>
+        <button type="Submit" (click)="onSubmit(weatherForm)">
+          Show Weather Info
+        </button>
+        <button type="Submit" (click)="onSubmit(weatherForm, 'days')">
+          Next 10 days
+        </button>
+      </form>
+    </div>
+  </section>
+</div>
+<div *ngIf="showErrMsg">
+  <h1>{{ errMsg }}</h1>
+</div>
+<div *ngIf="showCurrWeather || showForecastWeather" class="toggle-container">
+<div class="temp-unit-toggle" class="pad-40">
+  <label>Temp Unit</label>
+  <input type="radio" value="celcius" name="tempUnit" (change)="toggleTemp($event)" checked> Celcius
+  <input type="radio" value="farenheit" name="tempUnit" (change)="toggleTemp($event)"> Farenheit
+</div>
+<div *ngIf="!showForecastWeather ">
+
+<div class="wind-unit-toggle" class="pad-40">
+  <label>Wind Unit</label>
+  <input type="radio" value="miles" name="windUnit" (change)="toggleWind($event)" checked> Miles
+  <input type="radio" value="KM" name="windUnit" (change)="toggleWind($event)" > KM
+</div>
+</div>
+</div>
+<div *ngIf="showCurrWeather" class="pad-40 mb-10">
+  <!-- <app-current-weather [weatherInfo]="weatherData" [tempUnit]="currTempMode" [windUnit]="currWindMode"></app-current-weather> -->
+  <app-current-weather
+    [presentWeatherInfo]="presentWeatherData"
+    [tempUnit]="currTempMode"
+    [windUnit]="currWindMode"
+  ></app-current-weather>
+</div>
+<div *ngIf="showForecastWeather" class="pad-40 mb-10">
+  <!-- <app-forecast-weather [weatherForecast]="weatherData" [tempUnit]="currTempMode"></app-forecast-weather> -->
+  <app-forecast-weather
+    [weatherForecast]="futureWeatherData"
+    [tempUnit]="currTempMode"
+  ></app-forecast-weather>
+</div>

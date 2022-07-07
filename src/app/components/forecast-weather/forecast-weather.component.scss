@@ -1,0 +1,26 @@
+.current-weather-container {
+  // background-color: #9bc1bc;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  // max-width: 50%;
+  display: flex;
+  justify-content: space-between;
+  
+  .forecast-card-layout {
+    display: flex;
+    // margin: 20px;
+    
+    .forecast-card-container {
+      margin: 10px;
+      // padding: 10px;
+      // border: 1px solid transparent;
+      // padding: 10px;
+      // border-radius: 10px;
+      background-color: #4a4a6ae6;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    padding: 0px 20px;
+  
+    }
+  }
+}

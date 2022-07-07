@@ -1,0 +1,62 @@
+<div class="current-weather-container" [ngStyle]="{'background-image':'url('+img+')',color:fontColor}">
+  <div class="header-info">
+    <h2>Current Weather</h2>
+    <p>
+      {{ this.currWeather.day }}
+      {{ this.currWeather.date | date: "dd-MMM-yyyy" }}
+    </p>
+  </div>
+  <div class="current-weather-overview">
+    <div class="current-weather-summary">
+      <img width="70px" height="70px" src="{{ this.currWeather.imagePath }}" />
+
+      <div class="temp-summary-no">
+        <ng-container *ngIf="tempUnit === 'celcius'">
+          {{ this.currWeather.tempCelsius }}
+          <span class="temp-summary-unit">°C</span>
+        </ng-container>
+        <ng-container *ngIf="tempUnit === 'farenheit'">
+          {{ this.currWeather.tempFahrenheit }} 
+          <span class="temp-summary-unit">F</span>
+        </ng-container>
+      </div>
+      <div class="temp-feels-like">
+        <div class="weather-description">
+          {{ this.currWeather.weatherDescription | uppercase }}
+        </div>
+        <div class="weather-description">
+          Feels Like
+          <ng-container *ngIf="tempUnit === 'celcius'">
+            {{ this.currWeather.feelsLike_c }}°</ng-container
+          >
+          <ng-container *ngIf="tempUnit === 'farenheit'">
+            {{ this.currWeather.feelsLike_f }}°</ng-container
+          >
+        </div>
+      </div>
+    </div>
+    <div class="current-weather-detail">
+      <div class="current-weather-detail-item">
+        <p>WIND</p>
+
+        <p>
+          <ng-container *ngIf="windUnit === 'KM'">
+            {{ this.currWeather.wind_kph }} km/h</ng-container
+          >
+          <ng-container *ngIf="windUnit === 'MILES'">
+            {{ this.currWeather.wind_mph }} m/h</ng-container
+          >
+        </p>
+      </div>
+      <div class="current-weather-detail-item">
+        <p>HUMIDITY</p>
+        <p>{{ this.currWeather.humidity }} %</p>
+      </div>
+      <div class="current-weather-detail-item">
+        <p>PRESSURE</p>
+        <p>{{ this.currWeather.pressure }} mb</p>
+      </div>
+    </div>
+  </div>
+  <!-- End of Current Weather Container Code -->
+</div>

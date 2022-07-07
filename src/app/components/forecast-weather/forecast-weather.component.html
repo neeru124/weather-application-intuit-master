@@ -1,0 +1,29 @@
+<!-- Start of 10 day Weather Forecast code -->
+<div *ngIf="forecastWeather.length > 1">
+  <h2>10 Day Forecast</h2>
+  <div class="current-weather-container forecast-card-layout">
+    <div
+      class="forecast-card-container"
+      *ngFor="let forecastResult of forecastWeather"
+    >
+      <div>
+        <p>{{ forecastResult.day }} {{ forecastResult.date | date: "dd" }}</p>
+      </div>
+      <div style="display: flex;">
+        <img width="40px" height="40px" src="{{ forecastResult.imagePath }}" />
+
+        <div >
+          <ng-container *ngIf="tempUnit === 'celcius'">
+            <div>{{ forecastResult.mintempCelsius }}°</div>
+            <div>{{ forecastResult.maxtempCelsius }}°</div>
+          </ng-container>
+          <ng-container *ngIf="tempUnit === 'farenheit'">
+            <div>{{ forecastResult.mintempFahrenheit }}°</div>
+            <div>{{ forecastResult.maxtempFahrenheit }}°</div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End of 10 day Weather Forecast code -->
