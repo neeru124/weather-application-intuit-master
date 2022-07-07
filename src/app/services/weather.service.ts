@@ -89,7 +89,7 @@ export class WeatherService {
     return this.http.get<any>('https://community-open-weather-map.p.rapidapi.com/weather',{
       headers:this.headers,params:this.params
     });
-    return this.http.get<any>('https://mocki.io/v1/67c486d3-8099-4c42-ad91-940532810f68');
+    // return this.http.get<any>('https://mocki.io/v1/67c486d3-8099-4c42-ad91-940532810f68');
   }
   getRapidForecasttWeather(cityName?: string, postalCode?: number){
     if (cityName) {
@@ -101,9 +101,9 @@ export class WeatherService {
     }
       this.params = this.params.set('units', 'imperial');
 
-    // return this.http.get<any>('https://community-open-weather-map.p.rapidapi.com/forecast/daily',{
-    //     headers:this.headers,params:this.params
-    //   });
-      return this.http.get<any>('https://mocki.io/v1/1a121c02-87fb-4749-ade9-921535bc6926');
+    return this.http.get<any>('https://community-open-weather-map.p.rapidapi.com/forecast/daily',{
+        headers:this.headers,params:this.params
+      });
+      // return this.http.get<any>('https://mocki.io/v1/1a121c02-87fb-4749-ade9-921535bc6926');
   }
 }

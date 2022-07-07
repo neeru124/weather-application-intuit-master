@@ -23,7 +23,9 @@ export class CurrentWeatherComponent implements OnInit {
   @Input() windUnit: string = '';
 
   currWeather: CurrentWeather = {};
-  img='';fontColor='black';
+  img = '';
+  fontColor = 'black';
+  currentPlace = '';
   constructor() {}
 
   ngOnInit(): void {
@@ -54,11 +56,12 @@ export class CurrentWeatherComponent implements OnInit {
     // this.currWeather.feelsLike_f = this.weatherInfo.current.feelslike_f;
 
     // RAPID API WEATHER CODE
+    this.currentPlace = this.presentWeatherInfo.name;
     this.img = imgUrl(this.presentWeatherInfo.weather[0].main);
-    if(this.presentWeatherInfo.weather[0].main.toLowerCase()=== 'clouds'){
+    if (this.presentWeatherInfo.weather[0].main.toLowerCase() === 'clouds') {
       this.fontColor = 'white';
-    }else {
-      this.fontColor = 'black'
+    } else {
+      this.fontColor = 'black';
     }
     let iconCode = this.presentWeatherInfo.weather[0].icon;
     let iconUrl = `http://openweathermap.org/img/w/${iconCode}.png`;
@@ -80,9 +83,7 @@ export class CurrentWeatherComponent implements OnInit {
       this.presentWeatherInfo.weather[0].description;
     this.currWeather.icon = iconUrl;
     this.currWeather.wind_mph = this.presentWeatherInfo.wind.speed;
-    this.currWeather.wind_kph = convertToKM(
-      this.currWeather.wind_mph
-    );
+    this.currWeather.wind_kph = convertToKM(this.currWeather.wind_mph);
     this.currWeather.feelsLike_f = this.presentWeatherInfo.main.feels_like;
 
     this.currWeather.feelsLike_c = convertToCelsius(

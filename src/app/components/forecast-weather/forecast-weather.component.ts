@@ -20,6 +20,8 @@ export class ForecastWeatherComponent implements OnInit {
   @Input() tempUnit!: string;
 
   forecastWeather: CurrentWeather[] = [];
+  focusCellColumnIndex = 0;
+  currentPlace = '';
   constructor() {}
 
   ngOnInit(): void {
@@ -42,7 +44,7 @@ export class ForecastWeatherComponent implements OnInit {
     //   };
     // });
     // console.log('forecastWeather',this.forecastWeather)
-
+    this.currentPlace = this.weatherForecast.city.name;
     let forecastday = this.weatherForecast.list;
     this.forecastWeather = forecastday.map((foreCastDetails: List) => {
       let forecastData: CurrentWeather = {};
@@ -61,5 +63,14 @@ export class ForecastWeatherComponent implements OnInit {
         maxtempCelsius: convertToCelsius(foreCastDetails.temp.max),
       };
     });
+  }
+
+  clickLeft(){
+    this.focusCellColumnIndex =
+        (this.focusCellColumnIndex - 1 + this.forecastWeather.length) % this.forecastWeather.length;
+        this.focusCellColumnIndex = (this.focusCellColumnIndex + 1) % this.forecastWeather.length;
+  }
+  clickRightt(){
+    this.focusCellColumnIndex = this.focusCellColumnIndex = (this.focusCellColumnIndex + 1) % this.forecastWeather.length;
   }
 }

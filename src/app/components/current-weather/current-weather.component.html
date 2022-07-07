@@ -1,6 +1,6 @@
 <div class="current-weather-container" [ngStyle]="{'background-image':'url('+img+')',color:fontColor}">
   <div class="header-info">
-    <h2>Current Weather</h2>
+    <h2>Current Weather  <span> {{currentPlace}} </span></h2>
     <p>
       {{ this.currWeather.day }}
       {{ this.currWeather.date | date: "dd-MMM-yyyy" }}

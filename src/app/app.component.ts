@@ -16,7 +16,7 @@ export class AppComponent {
   weatherForm!: FormGroup;
   weatherData!: Weather;
   presentWeatherData!: PresentWeather;
-  futureWeatherData!:ForecastWeather;
+  futureWeatherData!: ForecastWeather;
 
   currentPlace = '';
   isLocationAvailable = false;
@@ -28,35 +28,32 @@ export class AppComponent {
   showForecastWeather = false;
   currTempMode = 'celcius'; // farenheit
   currWindMode = 'MILES'; // KM,MILES
-  
+
   constructor(private fb: FormBuilder, private weatherDetail: WeatherService) {
     this.weatherForm = this.fb.group({
       city: '',
-      zipcode: ''
+      zipcode: '',
     });
-    
   }
 
   ngOnInit() {
-    console.log(localStorage.getItem('cityName'))
-    if(localStorage.getItem('cityName')){
-      console.log('localStorage')
+    console.log(localStorage.getItem('cityName'));
+    if (localStorage.getItem('cityName')) {
+      console.log('localStorage');
       this.showWeather(0, localStorage.getItem('cityName'), undefined);
+    } else if (localStorage.getItem('zipcode')) {
+      console.log('localStorage');
 
-    }else if(localStorage.getItem('zipcode')){
-      console.log('localStorage')
-
-      this.showWeather(0, undefined,localStorage.getItem('zipcode'));
-
-    }else {
+      this.showWeather(0, undefined, localStorage.getItem('zipcode'));
+    } else {
       this.getCurrentLocation();
     }
   }
-  toggleTemp(ev:any){
+  toggleTemp(ev: any) {
     console.log(ev.target.value);
     this.currTempMode = ev.target.value;
   }
-  toggleWind(ev:any){
+  toggleWind(ev: any) {
     console.log(ev.target.value);
     this.currWindMode = ev.target.value;
   }
@@ -72,8 +69,9 @@ export class AppComponent {
           .getCurrentLocationName(this.currLat, this.currLng)
           .subscribe((res) => {
             console.log('ressssssssssssssss', res);
-            this.currentPlace = res[2].name;
-            localStorage.setItem('cityName',this.currentPlace);
+            this.currentPlace = res[0].name;
+            localStorage.setItem('cityName', this.currentPlace);
+            this.showWeather(0, localStorage.getItem('cityName'), undefined);
           });
       });
     } else {
@@ -85,7 +83,12 @@ export class AppComponent {
   onSubmit(form: FormGroup, days?: string) {
     console.log('onSubmit called');
     this.isLocationAvailable = true;
-    if (!form.value.city && !form.value.zipcode && localStorage.getItem('cityName') && localStorage.getItem('zipcode')) {
+    if (
+      !form.value.city &&
+      !form.value.zipcode &&
+      localStorage.getItem('cityName') &&
+      localStorage.getItem('zipcode')
+    ) {
       this.showErrMsg = true;
     } else {
       this.showErrMsg = false;
@@ -94,14 +97,14 @@ export class AppComponent {
     if (days) {
       noOfDays = 10;
     }
-    
+
     if (form.value.city) {
       this.showWeather(noOfDays, form.value.city, undefined);
-      localStorage.setItem('cityName',form.value.city);
+      localStorage.setItem('cityName', form.value.city);
       localStorage.removeItem('zipcode');
     } else {
       this.showWeather(noOfDays, undefined, form.value.zipcode);
-      localStorage.setItem('zipcode',form.value.zipcode);
+      localStorage.setItem('zipcode', form.value.zipcode);
       localStorage.removeItem('cityName');
     }
   }
@@ -120,33 +123,32 @@ export class AppComponent {
     //       this.showForecastWeather = false;
     //     }
     //   });
-    if(noOfDays>0){
+    if (noOfDays > 0) {
       this.weatherDetail
-      .getRapidForecasttWeather(city, zipcode)
-      .subscribe((response: ForecastWeather) => {
-        this.futureWeatherData = response;
-        console.log(this.weatherData);
-        if (noOfDays > 0) {
-          this.showCurrWeather = false;
-          this.showForecastWeather = true;
-        } 
-      });
-    }else {
+        .getRapidForecasttWeather(city, zipcode)
+        .subscribe((response: ForecastWeather) => {
+          this.futureWeatherData = response;
+          console.log(this.weatherData);
+          if (noOfDays > 0) {
+            this.showCurrWeather = false;
+            this.showForecastWeather = true;
+          }
+        });
+    } else {
       this.weatherDetail
-      .getRapidCurrentWeather(city, zipcode)
-      .subscribe((response: PresentWeather ) => {
-        this.presentWeatherData = response;
-        console.log(this.weatherData);
-        if (noOfDays > 0) {
-          this.showCurrWeather = true;
-          this.showForecastWeather = true;
-        } else {
-          this.showCurrWeather = true;
-          this.showForecastWeather = false;
-        }
-      });
+        .getRapidCurrentWeather(city, zipcode)
+        .subscribe((response: PresentWeather) => {
+          this.presentWeatherData = response;
+          console.log(this.weatherData);
+          if (noOfDays > 0) {
+            this.showCurrWeather = true;
+            this.showForecastWeather = true;
+          } else {
+            this.showCurrWeather = true;
+            this.showForecastWeather = false;
+          }
+        });
     }
-    
   }
   updateCurrPlaceWeather() {
     this.weatherDetail

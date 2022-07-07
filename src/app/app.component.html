@@ -38,11 +38,12 @@
 
 <div class="wind-unit-toggle" class="pad-40">
   <label>Wind Unit</label>
-  <input type="radio" value="miles" name="windUnit" (change)="toggleWind($event)" checked> Miles
+  <input type="radio" value="MILES" name="windUnit" (change)="toggleWind($event)" checked> Miles
   <input type="radio" value="KM" name="windUnit" (change)="toggleWind($event)" > KM
 </div>
 </div>
 </div>
+<h2 style="padding: 40px;">{{currentPlace}}</h2>
 <div *ngIf="showCurrWeather" class="pad-40 mb-10">
   <!-- <app-current-weather [weatherInfo]="weatherData" [tempUnit]="currTempMode" [windUnit]="currWindMode"></app-current-weather> -->
   <app-current-weather
